@@ -8,13 +8,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {CustomModels} from "@/BabylonExamples/CustomModels"
+import {LightsShadows} from "@/BabylonExamples/LightsShadows"
 
 export default defineComponent({
   name: 'BabylonExamples',
   mounted(){
     const canvas = document.querySelector("canvas")!;
-    new CustomModels(canvas);
+    new LightsShadows(canvas);
   }
   
 });
@@ -26,7 +26,7 @@ export default defineComponent({
 
 div {
   width:70%;
-  height:70%;
+  height:70vh;
   display:flex;
   flex-direction: column;
   justify-content: center;

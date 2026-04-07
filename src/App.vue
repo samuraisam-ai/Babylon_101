@@ -17,23 +17,26 @@ export default defineComponent({
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 * {
-  padding:0;
-  margin:0;
-  background-image: url("../public/images/Background_Dots.png");   
+  padding: 0;
+  margin: 0;
+  background-image: url("../public/images/Background_Dots.png");
   background-size: cover;
-  background-position:center;
+  background-position: center;
 }
 
 #app {
-  width:100%;
-  height:100%; 
-  display:flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
   justify-content: center;
-  align-items: center; 
-  margin-top:4rem;
+  align-items: center;
+  margin-top: 4rem;
 }
-
-
-
 </style>
