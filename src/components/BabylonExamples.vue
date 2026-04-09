@@ -49,6 +49,8 @@ canvas {
   border:none;
   outline:none;
   box-shadow:8px 8px 10px -6px #000000;
+  position: relative;
+  z-index: 1;
 }
 
 

@@ -3,7 +3,6 @@ import {
   Engine,
   FreeCamera,
   Vector3,
-  HemisphericLight,
   MeshBuilder,
   SceneLoader,
   AbstractMesh,
@@ -12,10 +11,7 @@ import {
   GizmoManager,
   Light,
   Color3,
-  DirectionalLight,
   PointLight,
-  SpotLight,
-  ShadowGenerator,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 
@@ -61,7 +57,6 @@ export class LightsShadows {
     );
 
     this.ball = MeshBuilder.CreateSphere("ball", { diameter: 0.5 }, this.scene);
-
     this.ball.position = new Vector3(0, 1, -1);
 
     const glowLayer = new GlowLayer("glowLayer", this.scene);
@@ -71,22 +66,6 @@ export class LightsShadows {
   }
 
   CreateLights(): void {
-    // const hemiLight = new HemisphericLight(
-    //   "hemiLight",
-    //   new Vector3(0, 1, 0),
-    //   this.scene
-    // );
-
-    // hemiLight.diffuse = new Color3(1, 0, 0);
-    // hemiLight.groundColor = new Color3(0, 0, 1);
-    // hemiLight.specular = new Color3(0, 1, 0);
-
-    // const directionalLight = new DirectionalLight(
-    //   "directionalLight",
-    //   new Vector3(0, -1, 0),
-    //   this.scene
-    // );
-
     const pointLight = new PointLight(
       "pointLight",
       new Vector3(0, 1, 0),
@@ -101,33 +80,8 @@ export class LightsShadows {
     pointLight.parent = this.lightTubes[0];
     pointClone.parent = this.lightTubes[1];
 
-    const spotLight = new SpotLight(
-      "spotLight",
-      new Vector3(0, 0.5, -3),
-      new Vector3(0, 1, 3),
-      Math.PI / 2,
-      10,
-      this.scene
-    );
-
-    spotLight.intensity = 100;
-
-    spotLight.shadowEnabled = true;
-    spotLight.shadowMinZ = 1;
-    spotLight.shadowMaxZ = 10;
-
-    const shadowGen = new ShadowGenerator(2048, spotLight);
-    shadowGen.useBlurCloseExponentialShadowMap = true;
-
-    this.ball.receiveShadows = true;
-    shadowGen.addShadowCaster(this.ball);
-
-    this.models.map((mesh) => {
-      mesh.receiveShadows = true;
-      shadowGen.addShadowCaster(mesh);
-    });
-
-    this.CreateGizmos(spotLight);
+    this.CreateGizmos(pointLight);
+    this.CreateGizmos(pointClone);
   }
 
   CreateGizmos(customLight: Light): void {

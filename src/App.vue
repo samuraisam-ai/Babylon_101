@@ -26,6 +26,9 @@ html, body {
 * {
   padding: 0;
   margin: 0;
+}
+
+body {
   background-image: url("../public/images/Background_Dots.png");
   background-size: cover;
   background-position: center;
