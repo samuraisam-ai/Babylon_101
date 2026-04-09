@@ -28,6 +28,7 @@ export class LightsShadows {
 
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
+    this.engine.resize();
     this.scene = this.CreateScene();
     this.CreateEnvironment();
 

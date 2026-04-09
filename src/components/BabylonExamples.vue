@@ -45,7 +45,7 @@ p {
 
 canvas {
   width:100%;
-  height:100%;
+  height:calc(70vh - 60px);
   border:none;
   outline:none;
   box-shadow:8px 8px 10px -6px #000000;
