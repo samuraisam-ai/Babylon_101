@@ -12,6 +12,7 @@ import {
   Light,
   Color3,
   PointLight,
+  SpotLight,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 
@@ -66,22 +67,35 @@ export class LightsShadows {
   }
 
   CreateLights(): void {
-    const pointLight = new PointLight(
-      "pointLight",
-      new Vector3(0, 1, 0),
+    // const pointLight = new PointLight(
+    //   "pointLight",
+    //   new Vector3(0, 1, 0),
+    //   this.scene
+    // );
+
+    // pointLight.diffuse = new Color3(172 / 255, 246 / 255, 250 / 255);
+    // pointLight.intensity = 0.25;
+
+    // const pointClone = pointLight.clone("pointClone") as PointLight;
+
+    // pointLight.parent = this.lightTubes[0];
+    // pointClone.parent = this.lightTubes[1];
+
+    // this.CreateGizmos(pointLight);
+    // this.CreateGizmos(pointClone);
+
+    const spotLight = new SpotLight(
+      "spotLight",
+      new Vector3(0, 0.5, -3),
+      new Vector3(0, 1, 3),
+      Math.PI / 2,
+      10,
       this.scene
     );
 
-    pointLight.diffuse = new Color3(172 / 255, 246 / 255, 250 / 255);
-    pointLight.intensity = 0.25;
+    spotLight.intensity = 10;
 
-    const pointClone = pointLight.clone("pointClone") as PointLight;
-
-    pointLight.parent = this.lightTubes[0];
-    pointClone.parent = this.lightTubes[1];
-
-    this.CreateGizmos(pointLight);
-    this.CreateGizmos(pointClone);
+    this.CreateGizmos(spotLight);
   }
 
   CreateGizmos(customLight: Light): void {
