@@ -1,58 +1,92 @@
 <template>
-<div>
-<p>Custom Models</p>
-<canvas></canvas>
-</div>
-
+  <div class="previs-container">
+    <div class="tab-bar">
+      <button
+        :class="['tab-btn', activeView === 'visualiser' ? 'active' : '']"
+        @click="switchView('visualiser')"
+      >
+        Visualiser
+      </button>
+      <button
+        :class="['tab-btn', activeView === 'floorplan' ? 'active' : '']"
+        @click="switchView('floorplan')"
+      >
+        Floor Plan
+      </button>
+    </div>
+    <canvas ref="canvas"></canvas>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import {LightsShadows} from "@/BabylonExamples/LightsShadows"
+import { defineComponent, ref, onMounted } from "vue";
+import { PrevisScene } from "@/BabylonExamples/PrevisScene";
 
 export default defineComponent({
-  name: 'BabylonExamples',
-  mounted(){
-    const canvas = document.querySelector("canvas")!;
-    new LightsShadows(canvas);
-  }
-  
+  name: "BabylonExamples",
+  setup() {
+    const canvas = ref<HTMLCanvasElement | null>(null);
+    const activeView = ref<"visualiser" | "floorplan">("visualiser");
+    let previsScene: PrevisScene | null = null;
+
+    onMounted(() => {
+      if (canvas.value) {
+        previsScene = new PrevisScene(canvas.value);
+      }
+    });
+
+    function switchView(view: "visualiser" | "floorplan") {
+      activeView.value = view;
+      if (view === "visualiser") {
+        previsScene?.switchToVisualiser();
+      } else {
+        previsScene?.switchToFloorPlan();
+      }
+    }
+
+    return { canvas, activeView, switchView };
+  },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@100;700&display=swap');
-
-div {
-  width:70%;
-  height:70vh;
-  display:flex;
+.previs-container {
+  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background:none;
+  width: 100%;
+  height: 100vh;
 }
 
-p {
-  color:white;
-  background:none;
-  margin-bottom:1rem;
- font-family: 'Roboto Condensed';
-  font-weight: 400;
-  font-size:2rem;
+.tab-bar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  justify-content: center;
+}
+
+.tab-btn {
+  padding: 0.5rem 2rem;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.tab-btn.active {
+  background: white;
+  color: black;
 }
 
 canvas {
-  width:100%;
-  height:calc(70vh - 60px);
-  border:none;
-  outline:none;
-  box-shadow:8px 8px 10px -6px #000000;
-  position: relative;
-  z-index: 1;
+  width: 100%;
+  height: calc(100vh - 70px);
+  outline: none;
 }
-
-
-
 </style>
